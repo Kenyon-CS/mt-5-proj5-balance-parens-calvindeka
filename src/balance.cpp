@@ -2,13 +2,21 @@
 #include <string>
 
 static bool is_balanced_rec(const std::string& s, int idx, int open) {
-    // TODO: implement recursively.
-    // - If open < 0 => false
-    // - If idx == s.size() => open == 0
-    // - If '(' => recurse open+1
-    // - If ')' => recurse open-1
-    // - else ignore
-    return false;
+    // Base case: too many closing parentheses
+    if (open < 0) return false;
+
+    // Base case: reached the end of the string
+    if (idx == s.size()) return open == 0;
+
+    // Recursive step: check current character
+    if (s[idx] == '(') {
+        return is_balanced_rec(s, idx + 1, open + 1);
+    } else if (s[idx] == ')') {
+        return is_balanced_rec(s, idx + 1, open - 1);
+    } else {
+        // Ignore non-parenthesis characters
+        return is_balanced_rec(s, idx + 1, open);
+    }
 }
 
 bool is_balanced(const std::string& s) {
